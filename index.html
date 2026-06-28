@@ -3,46 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout Planner</title>
+    <title>FitForge | Intelligent Workout Architecture</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Workout Planner</h1>
-            <p>Plan your routine. AI features coming soon.</p>
-        </header>
+    <header class="app-header">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-dumbbell text-primary"></i> FitForge
+            </div>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-target="view-home">Home</button>
+                <button class="nav-btn" data-target="view-generator">Generator</button>
+                <button class="nav-btn" data-target="view-library">Library</button>
+                <button class="nav-btn" data-target="view-saved">Saved Plans</button>
+                <button class="nav-btn" data-target="view-about">About</button>
+            </nav>
+        </div>
+    </header>
 
-        <main>
-            <section class="planner-form">
-                <h2>Add Exercise</h2>
-                <form id="workout-form">
-                    <div class="form-group">
-                        <label for="exercise-name">Exercise Name</label>
-                        <input type="text" id="exercise-name" required placeholder="e.g., Bench Press">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="sets">Sets</label>
-                            <input type="number" id="sets" min="1" required placeholder="4">
-                        </div>
-                        <div class="form-group">
-                            <label for="reps">Reps</label>
-                            <input type="number" id="reps" min="1" required placeholder="10">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-submit">Add to Plan</button>
-                </form>
-            </section>
+    <main class="app-viewport">
 
-            <section class="routine-display">
-                <h2>Current Routine</h2>
-                <ul id="workout-list">
+        <section id="view-home" class="view-section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Engineer Your Perfect <span class="text-primary">Physique</span></h1>
+                    <p>Stop guessing. Generate a structured, 7-day workout plan tailored specifically to your goals, experience, and available equipment.</p>
+                    <button class="btn-primary btn-large" id="cta-create-plan">Create Workout Plan <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fa-solid fa-bolt feature-icon"></i>
+                    <h3>Smart Generation</h3>
+                    <p>Dynamic 7-day routines built around your specific inputs.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-book-open feature-icon"></i>
+                    <h3>Extensive Library</h3>
+                    <p>Dozens of categorized exercises with difficulty and targeting data.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-floppy-disk feature-icon"></i>
+                    <h3>Local Persistence</h3>
+                    <p>Save and manage your routines directly on your device privately.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-generator" class="view-section hidden">
+            <div class="section-header">
+                <h2>Configure Parameters</h2>
+                <p>Enter your metrics to generate a custom 7-day protocol.</p>
+            </div>
+            
+            <div class="generator-layout">
+                <div class="form-panel">
+                    <form id="generator-form">
+                        <div class="input-group">
+                            <label for="user-name">Profile Name (Optional)</label>
+                            <input type="text" id="user-name" placeholder="e.g., Alex">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="user-age">Age</label>
+                            <input type="number" id="user-age" min="14" max="100" required placeholder="25">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Primary Goal</label>
+                            <select id="user-goal" required>
+                                <option value="" disabled selected>Select an objective...</option>
+                                <option value="muscle">Gain Muscle (Hypertrophy)</option>
+                                <option value="weight">Lose Weight (Cutting)</option>
+                                <option value="fit">Stay Fit (Maintenance)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Experience Level</label>
+                            <select id="user-experience" required>
+                                <option value="" disabled selected>Select experience...</option>
+                                <option value="beginner">Beginner (0-1 years)</option>
+                                <option value="intermediate">Intermediate (1-3 years)</option>
+                                <option value="advanced">Advanced (3+ years)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Available Equipment</label>
+                            <select id="user-equipment" required>
+                                <option value="" disabled selected>Select equipment...</option>
+                                <option value="none">None (Bodyweight only)</option>
+                                <option value="dumbbells">Dumbbells only</option>
+                                <option value="gym">Full Gym Access</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-block">Generate Protocol</button>
+                    </form>
+                </div>
+
+                <div class="output-panel hidden" id="plan-output">
+                    <div class="plan-header">
+                        <h3 id="plan-title">Your 7-Day Plan</h3>
+                        <button class="btn-secondary" id="btn-save-plan"><i class="fa-solid fa-bookmark"></i> Save Plan</button>
+                    </div>
+                    <div class="timeline" id="plan-timeline">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-library" class="view-section hidden">
+            <div class="section-header">
+                <h2>Movement Database</h2>
+                <p>Browse the master list of categorized exercises.</p>
+            </div>
+            
+            <div class="library-grid" id="library-grid">
+                </div>
+        </section>
+
+        <section id="view-saved" class="view-section hidden">
+            <div class="section-header">
+                <h2>Stored Protocols</h2>
+                <p>Access and manage your saved workout configurations.</p>
+            </div>
+            
+            <div class="saved-plans-container" id="saved-plans-list">
+                <div class="empty-state" id="saved-empty-state">
+                    <i class="fa-regular fa-folder-open"></i>
+                    <p>No saved plans found in local storage.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-about" class="view-section hidden">
+            <div class="about-container">
+                <h2>About FitForge</h2>
+                
+                <div class="about-block">
+                    <h3><i class="fa-solid fa-crosshairs"></i> Purpose</h3>
+                    <p>FitForge was engineered to remove the friction from workout planning. By taking in specific user metrics, it calculates a structured, balanced 7-day routine tailored to exact goals and limitations.</p>
+                </div>
+
+                <div class="about-block">
+                    <h3><i class="fa-solid fa-code"></i> Technologies</h3>
+                    <p>Built with a modern web stack focusing on performance and encapsulation:</p>
+                    <ul>
+                        <li><strong>HTML5:</strong> Semantic, accessible application structure.</li>
+                        <li><strong>CSS3:</strong> Custom properties, CSS Grid/Flexbox architecture, responsive design.</li>
+                        <li><strong>Vanilla JavaScript (ES6+):</strong> State management, DOM manipulation, and dynamic data rendering without bloated frameworks.</li>
+                        <li><strong>Local Storage API:</strong> Persistent data tracking across sessions.</li>
                     </ul>
-                <button id="clear-all" class="btn-clear">Clear All</button>
-            </section>
-        </main>
-    </div>
+                </div>
+
+                <div class="about-block">
+                    <h3><i class="fa-solid fa-gears"></i> How it Works</h3>
+                    <p>The application relies on a comprehensive internal array of exercise objects. When you submit your parameters, the generator's algorithm filters the master database based on your equipment and experience, then structures those exercises into a logical 7-day split (Push/Pull/Legs, Upper/Lower, or Full Body depending on the inputs).</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
     <script src="script.js"></script>
 </body>
 </html>
