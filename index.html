@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Workout Planner</h1>
+            <p>Plan your routine. AI features coming soon.</p>
+        </header>
+
+        <main>
+            <section class="planner-form">
+                <h2>Add Exercise</h2>
+                <form id="workout-form">
+                    <div class="form-group">
+                        <label for="exercise-name">Exercise Name</label>
+                        <input type="text" id="exercise-name" required placeholder="e.g., Bench Press">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="sets">Sets</label>
+                            <input type="number" id="sets" min="1" required placeholder="4">
+                        </div>
+                        <div class="form-group">
+                            <label for="reps">Reps</label>
+                            <input type="number" id="reps" min="1" required placeholder="10">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Add to Plan</button>
+                </form>
+            </section>
+
+            <section class="routine-display">
+                <h2>Current Routine</h2>
+                <ul id="workout-list">
+                    </ul>
+                <button id="clear-all" class="btn-clear">Clear All</button>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
