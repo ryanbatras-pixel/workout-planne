@@ -70,3 +70,6 @@ button:hover { transform: scale(1.05); }
     margin-top: 0;
     color: var(--accent);
 }
+.page { display: none; }
+.page.active { display: block; }
+.hidden { display: none; }
