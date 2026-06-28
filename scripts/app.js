@@ -1,55 +1,70 @@
-// 1. Select the elements
-var navLinks = document.querySelectorAll('.nav-link');
-var pages = document.querySelectorAll('.page');
-var ctaButton = document.getElementById('cta-button');
+// scripts/app.js
+import { exercises } from './data.js';
+import { renderLibrary } from './ui.js';
 
-// 2. Function to switch pages
+// 1. Initialize UI
+document.addEventListener('DOMContentLoaded', () => {
+    renderLibrary(exercises);
+});
+
+// 2. Navigation Logic
+const navLinks = document.querySelectorAll('.nav-link');
+const pages = document.querySelectorAll('.page');
+const ctaButton = document.getElementById('cta-button');
+
 function switchPage(targetId) {
-    // Hide all pages
-    for (var i = 0; i < pages.length; i++) {
-        pages[i].classList.remove('active');
-        pages[i].classList.add('hidden');
-    }
-    // Show target page
-    document.getElementById('view-' + targetId).classList.add('active');
-    document.getElementById('view-' + targetId).classList.remove('hidden');
-}
-
-// 3. Attach click events to nav buttons
-for (var i = 0; i < navLinks.length; i++) {
-    navLinks[i].addEventListener('click', function() {
-        var target = this.getAttribute('data-view');
-        switchPage(target);
+    pages.forEach(page => {
+        page.classList.remove('active');
+        page.classList.add('hidden');
     });
+    const targetPage = document.getElementById('view-' + targetId);
+    if (targetPage) {
+        targetPage.classList.remove('hidden');
+        targetPage.classList.add('active');
+    }
 }
 
-// 4. Make the CTA button switch to generator
-ctaButton.addEventListener('click', function() {
-    switchPage('generator');
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        switchPage(e.target.getAttribute('data-view'));
+    });
 });
-// Add this to scripts/app.js
-var genForm = document.getElementById('gen-form');
-var planDisplay = document.getElementById('plan-display');
 
-genForm.addEventListener('submit', function(event) {
-    // 1. Stop the page from refreshing
+if (ctaButton) {
+    ctaButton.addEventListener('click', () => switchPage('generator'));
+}
+
+// 3. Generator Form Logic
+const genForm = document.getElementById('gen-form');
+const planDisplay = document.getElementById('plan-display');
+
+if (genForm) {
+    // Inside your genForm event listener in scripts/app.js
+genForm.addEventListener('submit', (event) => {
     event.preventDefault();
+    const equip = document.getElementById('equip').value;
+    const intensity = document.getElementById('goal').value; // 'muscle', 'weight', 'fit'
 
-    // 2. Capture the inputs
-    var userName = document.getElementById('name').value;
-    var goal = document.getElementById('goal').value;
-    var equipment = document.getElementById('equip').value;
+    const filtered = exercises.filter(ex => 
+        ex.equipment === equip || ex.equipment === "none"
+    );
 
-    // 3. Simple logic to show we captured the data
-    var planHTML = `
-        <div class="card" style="margin-top: 20px;">
-            <h3>Workout for ${userName || "User"}</h3>
-            <p><strong>Goal:</strong> ${goal}</p>
-            <p><strong>Equipment:</strong> ${equipment}</p>
-            <p>Your 7-day routine will be generated here soon.</p>
-        </div>
-    `;
+    // Logic: 'muscle' goal = higher sets, 'weight' goal = higher reps
+    const displayHTML = filtered.map(ex => {
+        let sets = ex.sets;
+        let reps = ex.reps;
+        
+        if (intensity === 'muscle') sets += 1;
+        if (intensity === 'weight') reps += 5;
 
-    // 4. Inject into the page
-    planDisplay.innerHTML = planHTML;
+        return `
+            <div class="exercise-card">
+                <strong>${ex.name}</strong> 
+                <p>Target: ${sets} sets of ${reps} reps</p>
+            </div>
+        `;
+    }).join('');
+
+    planDisplay.innerHTML = `<div class="card"><h3>Your Custom Plan</h3>${displayHTML}</div>`;
 });
+}
