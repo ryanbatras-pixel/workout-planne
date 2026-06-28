@@ -5,6 +5,13 @@ import { renderLibrary } from './ui.js';
 // 1. Initialize UI
 document.addEventListener('DOMContentLoaded', () => {
     renderLibrary(exercises);
+    
+    // Check if we have a saved plan
+    const saved = getSavedPlan();
+    if (saved) {
+        // Display the saved plan automatically
+        planDisplay.innerHTML = `<div class="card"><h3>Your Saved Plan</h3>...</div>`;
+    }
 });
 
 // 2. Navigation Logic
@@ -68,3 +75,34 @@ genForm.addEventListener('submit', (event) => {
     planDisplay.innerHTML = `<div class="card"><h3>Your Custom Plan</h3>${displayHTML}</div>`;
 });
 }
+// Add these functions to your app.js
+function savePlan(planData) {
+    localStorage.setItem('fitForge_plan', JSON.stringify(planData));
+}
+
+function getSavedPlan() {
+    const saved = localStorage.getItem('fitForge_plan');
+    return saved ? JSON.parse(saved) : null;
+}
+
+// Update your submit listener to call savePlan()
+genForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    // ... (rest of your existing logic) ...
+    
+    // After generating the plan, save it
+    savePlan(filtered); 
+});
+// Add this to your event listeners in scripts/app.js
+const resetBtn = document.getElementById('reset-btn');
+
+resetBtn.addEventListener('click', () => {
+    // 1. Clear local storage
+    localStorage.removeItem('fitForge_plan');
+    
+    // 2. Clear the UI
+    planDisplay.innerHTML = '';
+    
+    // 3. Optional: Reset form fields
+    genForm.reset();
+});
