@@ -27,3 +27,29 @@ for (var i = 0; i < navLinks.length; i++) {
 ctaButton.addEventListener('click', function() {
     switchPage('generator');
 });
+// Add this to scripts/app.js
+var genForm = document.getElementById('gen-form');
+var planDisplay = document.getElementById('plan-display');
+
+genForm.addEventListener('submit', function(event) {
+    // 1. Stop the page from refreshing
+    event.preventDefault();
+
+    // 2. Capture the inputs
+    var userName = document.getElementById('name').value;
+    var goal = document.getElementById('goal').value;
+    var equipment = document.getElementById('equip').value;
+
+    // 3. Simple logic to show we captured the data
+    var planHTML = `
+        <div class="card" style="margin-top: 20px;">
+            <h3>Workout for ${userName || "User"}</h3>
+            <p><strong>Goal:</strong> ${goal}</p>
+            <p><strong>Equipment:</strong> ${equipment}</p>
+            <p>Your 7-day routine will be generated here soon.</p>
+        </div>
+    `;
+
+    // 4. Inject into the page
+    planDisplay.innerHTML = planHTML;
+});
