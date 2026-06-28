@@ -41,7 +41,34 @@
     <section id="view-generator" class="page hidden">
         <div class="card">
             <h2>Workout Generator</h2>
-            <p>Coming soon: Configure your parameters here.</p>
+            <form id="gen-form">
+                <div class="input-group">
+                    <label>Name (Optional)</label>
+                    <input type="text" id="name" placeholder="Enter your name">
+                </div>
+                
+                <div class="input-group">
+                    <label>Goal</label>
+                    <select id="goal">
+                        <option value="muscle">Gain Muscle</option>
+                        <option value="weight">Lose Weight</option>
+                        <option value="fit">Stay Fit</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Equipment</label>
+                    <select id="equip">
+                        <option value="none">No Equipment</option>
+                        <option value="dumbbells">Dumbbells</option>
+                        <option value="gym">Full Gym</option>
+                    </select>
+                </div>
+                
+                <button type="submit" id="generate-btn">Generate Plan</button>
+            </form>
+            
+            <div id="plan-display" style="margin-top: 20px;"></div>
         </div>
     </section>
 </main>

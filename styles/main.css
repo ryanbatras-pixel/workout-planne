@@ -73,3 +73,29 @@ button:hover { transform: scale(1.05); }
 .page { display: none; }
 .page.active { display: block; }
 .hidden { display: none; }
+.input-group {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+    color: #94a3b8;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    box-sizing: border-box;
+}
+
+#generate-btn {
+    width: 100%;
+    margin-top: 1rem;
+}
